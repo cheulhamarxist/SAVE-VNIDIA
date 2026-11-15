@@ -4,6 +4,8 @@ define Till = Character("Till", color="#2c9196")
 define Mizi = Character("Mizi", color="#ff77aa")
 define Sua = Character("Sua", color="#6655cc")
 define Alien = Character("Alien", color="#a074a0")
+define Verity = Character("Verity", color="#ffea00")
+image aliensprite = Transform("aliensprite.png", zoom=2.1)
 
 define red_flash = Fade(0.2, 0.3, 0.4, color="#aa0000")
 
@@ -231,7 +233,7 @@ screen big_start_button():
         xalign 0.5
         yalign 0.5
         spacing 30
-        text "NVIDIA MARKET STABILIZER v1.0" xalign 0.5 size 42 color "#00ff88"
+        text "NVIDIA MARKET STABILIZER v6.7" xalign 0.5 size 42 color "#00ff88"
         textbutton "START TRADING":
             xalign 0.5
             padding (80, 40)
@@ -247,22 +249,32 @@ screen big_start_button():
 label start:
 
     scene newsreportbg with fade
+    play sound "newsreport.mp3" fadein 0.5
     News "BREAKING NEWS!"
     News "NVIDIA stocks are plummeting rapidly AGAIN after Jensen's latest affair!"
     News "Analysts are in a panic as the chart goes straight into the red."
 
     Ivan "Well, this is convenient..."
+    stop sound fadeout 0.5
 
+    scene ivandesk with fade
+
+    play sound "ding.mp3" fadein 0.5
     "*DING!*" 
 
 
-    scene phonebg with fade
+    scene phonebg1 with fade
     Till "They just assigned us a new task..."
     Mizi "There's just more and more work..."
     Sua "Don't mess this up. Management is watching the live ticker."
 
-    scene cubiclebg with fade
+    scene gray with fade
     "*ZAP!* An Alien suddenly teleports into your cubicle."
+    play sound "teleport.mp3" fadein 0.5
+    show aliensprite:
+        xalign 0.5
+        yalign 250
+    with Dissolve(0.5)
     Alien "HUMAN. YOU HAVE BEEN SELECTED TO MANUALLY STABILIZE THE STOCK CHART."
     Alien "KEEP THE LINE IN THE GREEN. DO NOT HIT THE MARKET CANDLES."
 
@@ -273,13 +285,13 @@ label start:
     with red_flash
 
     if round1_won:
-        Till "Whoa, you actually pulled the stock back up! Nice work!"
-        Mizi "Keep going! One more push and the market closes in the green!"
-        Sua "Not bad. Stay focused for the final stretch."
+        show lomltill
+        Till "You're not bad at this.."
     else:
-        Sua "...That was a massive dip. What are you doing?"
-        Mizi "It's okay, there's still time before the closing bell! You got this!"
-        Till "Yeah, don't give up now. Just steady the line!"
+        scene verity with fade
+        Verity "Helloooooo! I'm Verity,"
+        Verity "Your personal helper friend"
+        Verity "I know everything!"
 
     call screen big_start_button
     call screen stock_minigame(obstacles=9, speed=560.0)
@@ -300,25 +312,40 @@ label ending_good:
     News "UNBELIEVABLE! NVIDIA stocks have skyrocketed to an all-time high!"
     Ivan "Looks like we have a new CEO."
     Till "Hey... congrats on the promotion. Want to celebrate after work?"
-    "ENDING 1: GOOD ENDING — CEO & Till's Affection"
+    "ENDING 1: GOOD ENDING : CEO & Till's Affection"
     return
 
 
 label ending_bad:
+    play audio "ivandeath.mp3" fadein 0.5
     scene newsreportbg with fade
     News "TOTAL COLLAPSE. NVIDIA shares have hit zero."
+    scene darkoutside with fade
+    Ivan "They fired me.. I guess I should have seen this coming.."
+    show aliensprite:
+        xalign 0.5
+        yalign 250
+    with Dissolve(0.5)
+    Alien "DID YOU REALLY THINK YOU COULD WALK AWAY WITH COMPANY SECRETS?"
+    show gunpoint:
+        xalign 0.35
+        yalign 0.8
     Alien "YOU HAVE FAILED THE QUOTA. TERMINATING EMPLOYEE."
+    play sound "gunshot.mp3" fadein 0.5
+
     "*PEW!*"
-    "ENDING 2: BAD ENDING — Fired (Literally)"
+
+    scene deadivan with fade
+    "ENDING 2: BAD ENDING : Fired (Literally)"
     return
 
 
 label ending_secret:
     scene newsreportbg with fade
     News "Markets close completely flat today after a wild rollercoaster session."
-    Ivan "Well, you didn't save the company, so no promotion. At least you aren't fired."
+    Ivan "Atleast I didn't crash the market.."
     "*DING!*"
     Till "Hey, rough day on the charts. Wanna grab coffee and forget about work?"
     "You meet up with Till at a quiet café away from the office..."
-    "ENDING 3: SECRET ENDING — Coffee Date with Till"
+    "ENDING 3: SECRET ENDING : Coffee Date with Till"
     return
