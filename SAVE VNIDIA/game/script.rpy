@@ -356,7 +356,7 @@ label ending_bad:
     "*PEW!*"
 
     scene deadivan with fade
-    "ENDING 2: BAD ENDING : Fired (Literally)"
+    "BAD ENDING : Fired (Literally)"
     return
 
 
@@ -373,6 +373,6 @@ label ending_secret:
     Till "Wanna grab coffee and forget about work?"
     scene ivantilldate with fade
     play sound "romantic.mp3" fadein 0.5
-    "ENDING 3: SECRET ENDING : Coffee Date with Till"
+    "MEDIOCRE ENDING : Coffee Date with Till"
     stop sound fadeout 0.5
     return

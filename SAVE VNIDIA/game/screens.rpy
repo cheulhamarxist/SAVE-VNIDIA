@@ -326,6 +326,8 @@ screen navigation():
             ## Help isn't necessary or relevant to mobile devices.
             textbutton _("Help") action ShowMenu("help")
 
+            textbutton _("Credits") action ShowMenu("credits")
+
         if renpy.variant("pc"):
 
             ## The quit button is banned on iOS and unnecessary on Android and
@@ -1619,3 +1621,16 @@ style slider_vbox:
 style slider_slider:
     variant "small"
     xsize 900
+
+screen credits():
+    tag menu
+
+    use game_menu(_("Credits"), scroll="viewport"):
+
+        style_prefix "about"
+
+        vbox:
+            spacing 20
+
+            text "EVERYTHING: Manvitha & Sarah"
+            text "Made with Ren'Py"
