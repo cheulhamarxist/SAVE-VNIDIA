@@ -12,7 +12,7 @@
 ##
 ## The _() surrounding the string marks it as eligible for translation.
 
-define config.name = _("SAVE VNIDIA")
+define config.name = _("")
 
 
 ## Determines if the title given above is shown on the main menu screen. Set
@@ -20,10 +20,12 @@ define config.name = _("SAVE VNIDIA")
 
 define gui.show_name = True
 
+define config.main_menu_music = "audio/waiting.mp3"
+
 
 ## The version of the game.
 
-define config.version = "1.0"
+define config.version = ""
 
 
 ## Text that is placed on the game's about screen. Place the text between the

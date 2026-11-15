@@ -7,7 +7,7 @@ define Alien = Character("Alien", color="#a074a0")
 define Verity = Character("Verity", color="#ffea00")
 image aliensprite = Transform("aliensprite.png", zoom=2.1)
 
-define red_flash = Fade(0.2, 0.3, 0.4, color="#aa0000")
+define red_flash = Fade(0.2, 0.3, 0.4, color="#06aa00")
 
 default round1_won = False
 default round2_won = False
@@ -233,7 +233,7 @@ screen big_start_button():
         xalign 0.5
         yalign 0.5
         spacing 30
-        text "NVIDIA MARKET STABILIZER v6.7" xalign 0.5 size 42 color "#00ff88"
+        text "VNIDIA MARKET STABILIZER v6.7" xalign 0.5 size 42 color "#00ff88"
         textbutton "START TRADING":
             xalign 0.5
             padding (80, 40)
@@ -248,10 +248,12 @@ screen big_start_button():
 
 label start:
 
+    stop music fadeout 0.5
+
     scene newsreportbg with fade
     play sound "newsreport.mp3" fadein 0.5
     News "BREAKING NEWS!"
-    News "NVIDIA stocks are plummeting rapidly AGAIN after Jensen's latest affair!"
+    News "VNIDIA stocks are plummeting rapidly AGAIN after Jensen's latest affair!"
     News "Analysts are in a panic as the chart goes straight into the red."
 
     Ivan "Well, this is convenient..."
@@ -276,26 +278,41 @@ label start:
         yalign 250
     with Dissolve(0.5)
     Alien "HUMAN. YOU HAVE BEEN SELECTED TO MANUALLY STABILIZE THE STOCK CHART."
-    Alien "KEEP THE LINE IN THE GREEN. DO NOT HIT THE MARKET CANDLES."
+    Alien "GET TO WORK. NOW."
+    Ivan "Fine..."
 
-    call screen big_start_button
-    call screen stock_minigame(obstacles=7, speed=480.0)
+    play sound "game.mp3" fadein 0.5
+    scene black with Dissolve(0.5)
+    call screen big_start_button 
+    call screen stock_minigame(obstacles=7, speed=480.0) 
     $ round1_won = (_return == "win")
+    stop sound fadeout 0.5
 
     with red_flash
 
     if round1_won:
+        play sound "win.mp3"
         show lomltill
         Till "You're not bad at this.."
+
     else:
         scene verity with fade
+        play sound "verity.mp3"
         Verity "Helloooooo! I'm Verity,"
         Verity "Your personal helper friend"
-        Verity "I know everything!"
+        Verity "Ask me anything,"
+        Verity "I know everything."
+        stop sound fadeout 0.5
+        Ivan "???"
+        Ivan "What the hell is this thing?"
+        Ivan "Whatever.. Let's just get this over with."
 
+    play sound "game.mp3" fadein 0.5
+    scene black with Dissolve(0.5)
     call screen big_start_button
     call screen stock_minigame(obstacles=9, speed=560.0)
     $ round2_won = (_return == "win")
+    stop sound fadeout 0.5
 
     with red_flash
 
@@ -308,18 +325,21 @@ label start:
 
 
 label ending_good:
-    scene newsreportbg with fade
-    News "UNBELIEVABLE! NVIDIA stocks have skyrocketed to an all-time high!"
-    Ivan "Looks like we have a new CEO."
+    scene ending2 with fade
+    play sound "win.mp3"
+    News "UNBELIEVABLE! VNIDIA stocks have skyrocketed to an all-time high!"
+    News "Looks like we have a new CEO."
+    scene kittenwhiskers with fade
     Till "Hey... congrats on the promotion. Want to celebrate after work?"
-    "ENDING 1: GOOD ENDING : CEO & Till's Affection"
+    Ivan "Of course kitten whiskers."
+    "YOU GOT THE GOOD ENDING! YOU SAVED VNIDIA!"
     return
 
 
 label ending_bad:
-    play audio "ivandeath.mp3" fadein 0.5
+    play sound "ivandeath.mp3" fadein 0.5
     scene newsreportbg with fade
-    News "TOTAL COLLAPSE. NVIDIA shares have hit zero."
+    News "TOTAL COLLAPSE. VNIDIA shares have hit zero."
     scene darkoutside with fade
     Ivan "They fired me.. I guess I should have seen this coming.."
     show aliensprite:
@@ -331,7 +351,7 @@ label ending_bad:
         xalign 0.35
         yalign 0.8
     Alien "YOU HAVE FAILED THE QUOTA. TERMINATING EMPLOYEE."
-    play sound "gunshot.mp3" fadein 0.5
+    play sound "gunshot.mp3" fadein 0.5 volume 1.0
 
     "*PEW!*"
 
@@ -341,11 +361,18 @@ label ending_bad:
 
 
 label ending_secret:
-    scene newsreportbg with fade
+    scene ending3 with fade
+    play sound "newsreport.mp3" fadein 0.5
     News "Markets close completely flat today after a wild rollercoaster session."
     Ivan "Atleast I didn't crash the market.."
+    stop sound fadeout 0.5
+    play sound "ding.mp3" 
     "*DING!*"
-    Till "Hey, rough day on the charts. Wanna grab coffee and forget about work?"
-    "You meet up with Till at a quiet café away from the office..."
+    scene phonebg3 with fade 
+    Till "Hey, rough day?"
+    Till "Wanna grab coffee and forget about work?"
+    scene ivantilldate with fade
+    play sound "romantic.mp3" fadein 0.5
     "ENDING 3: SECRET ENDING : Coffee Date with Till"
+    stop sound fadeout 0.5
     return
